@@ -18,13 +18,15 @@ export class PokemonService {
    * @returns {Promise<PokemonDto[]>} List with the names and URLs of the Pokémon.
    * @throws {HttpException} If any error occurs while calling the API.
    */
-  async getAllPokemons(): Promise<PokemonDto[]> {
+  async getAllPokemons(): Promise<{ results: PokemonDto[] }> {
     try {
       const { data } = await axios.get(`${this.apiUrl}/pokemon?limit=100`);
-      return data.results.map((pokemon: any) => ({
+      const results = data.results.map((pokemon: any) => ({
         name: pokemon.name,
         url: pokemon.url,
       }));
+
+      return { results }; // Devolver el objeto en el formato deseado
     } catch (error) {
       console.error('Error getAllPokemon: ', error);
       throw new HttpException(
@@ -72,15 +74,17 @@ export class PokemonService {
    * @returns {Promise<PokemonAndTypesDto>} Details of the Pokémon, including its translated types.
    * @throws {HttpException} If the ID is invalid or the Pokémon cannot be found.
    */
-  async getPokemoinAndTypes(id: number): Promise<PokemonAndTypesDto> {
+  async getPokemonAndTypes(id: number): Promise<PokemonAndTypesDto> {
     try {
       const { data } = await axios.get(`${this.apiUrl}/pokemon/${id}`);
       const typeWithTranslation = await Promise.all(
         data.types.map(async (typeInfo: any) => {
           const typeData = await axios.get(typeInfo.type.url);
-          const translations = typeData.data.names.filter(
-            (name: any) => name.language.name === 'es',
+
+          const translations = typeData.data.names.filter((name: any) =>
+            ['es', 'ja'].includes(name.language.name),
           );
+
           return {
             slot: typeInfo.slot,
             type: {

@@ -15,7 +15,7 @@ export class PokemonController {
    * @returns {Promise<PokemonDto[]>} List of Pokemon names and URLs.
    */
   @Get()
-  async getAllPokemons(): Promise<PokemonDto[]> {
+  async getAllPokemons(): Promise<{ results: PokemonDto[] }> {
     return this.pokemonService.getAllPokemons();
   }
 
@@ -38,6 +38,6 @@ export class PokemonController {
   async getPokemonAndTypes(
     @Param('id') id: string,
   ): Promise<PokemonAndTypesDto> {
-    return this.pokemonService.getPokemoinAndTypes(+id);
+    return this.pokemonService.getPokemonAndTypes(+id);
   }
 }

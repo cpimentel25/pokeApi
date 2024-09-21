@@ -36,23 +36,44 @@ The code structure follows a modular pattern, dividing functionalities into modu
 
 - **Method**: `GET`
 - **URL**: `/api/pokemon`
-- **Response**:
 
-  ```json
-  [
+**Example request using cURL**:
+
+```bash
+curl -X GET http://localhost:3000/api/pokemon
+```
+
+**Response**:
+
+```json
+{
+  "results": [
     {
       "name": "bulbasaur",
       "url": "https://pokeapi.co/api/v2/pokemon/1/"
     },
+    {
+      "name": "ivysaur",
+      "url": "https://pokeapi.co/api/v2/pokemon/2/"
+    },
     ...
   ]
-  ```
+}
 
-  ### 2. Get Pokémon details by ID
+```
+
+### 2. Get Pokémon details by ID
 
 - **Method**: `GET`
 - **URL**: `/api/pokemon/:id`
-- **Response**:
+
+**Example request using cURL**:
+
+```bash
+curl -X GET http://localhost:3000/api/pokemon/1
+```
+
+**Response**:
 
 ```json
 {
@@ -74,32 +95,68 @@ The code structure follows a modular pattern, dividing functionalities into modu
 
 - **Method**: `GET`
 - **URL**: `/api/pokemon/types/:id`
-- **Response**:
+
+**Example request using cURL**:
+
+```bash
+curl -X GET http://localhost:3000/api/pokemon/types/1
+```
+
+**Response**:
 
 ```json
 {
-  "name": "bulbasaur",
-  "types": [
-    {
-      "slot": 1,
-      "type": {
-        "name": "grass",
-        "url": "https://pokeapi.co/api/v2/type/12/",
-        "names": [
-          {
-            "language": {
-              "name": "es",
-              "url": "https://pokeapi.co/api/v2/language/2/"
-            },
-            "name": "planta"
-          }
-        ]
-      }
-    },
-    ...
-  ]
+{
+    "name": "bulbasaur",
+    "types": [
+        {
+            "slot": 1,
+            "type": {
+                "name": "grass",
+                "url": "https://pokeapi.co/api/v2/type/12/",
+                "names": [
+                    {
+                        "language": {
+                            "name": "es",
+                            "url": "https://pokeapi.co/api/v2/language/7/"
+                        },
+                        "name": "Planta"
+                    },
+                    {
+                        "language": {
+                            "name": "ja",
+                            "url": "https://pokeapi.co/api/v2/language/11/"
+                        },
+                        "name": "くさ"
+                    }
+                ]
+            }
+        },
+        {
+            "slot": 2,
+            "type": {
+                "name": "poison",
+                "url": "https://pokeapi.co/api/v2/type/4/",
+                "names": [
+                    {
+                        "language": {
+                            "name": "es",
+                            "url": "https://pokeapi.co/api/v2/language/7/"
+                        },
+                        "name": "Veneno"
+                    },
+                    {
+                        "language": {
+                            "name": "ja",
+                            "url": "https://pokeapi.co/api/v2/language/11/"
+                        },
+                        "name": "どく"
+                    }
+                ]
+            }
+        }
+    ]
 }
-
 ```
 
 ## How to Run the Application
@@ -117,7 +174,7 @@ cd tu_repositorio
 npm install
 ```
 
-### 3. Configure environment variables (if necessary)
+### 3. Configure environment variables
 
 Create a `.env` file in the root of the project and add the necessary configurations.
 
@@ -143,3 +200,5 @@ Open your browser and go to <http://localhost:3000/api/pokemon> to test the endp
 1. Make sure to update the repository and user details where applicable.
 2. If you use additional tools or libraries, add them to the corresponding section.
 3. Adjust the configuration and execution instructions as necessary for your specific project.
+4. Ensure that the API is running before making requests.
+5. Change localhost:3000 to the corresponding URL if the API is deployed on a remote server.
